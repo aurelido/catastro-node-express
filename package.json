@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/aurelido/catastro-services.git"
+    "url": "git+https://github.com/aurelido/catastro-node-express.git"
   },
   "license": "ISC",
   "dependencies": {
