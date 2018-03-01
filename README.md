@@ -1,8 +1,18 @@
 # Getting started
 
+*Read this in other languages: [English](README.md), [Spanish](README.es.md)
+
+This is a Node / Express server application that can be used as an API for consuming the public free services from http://www.catastro.meh.es/esp/sede.asp. 
+
+API is deployed here [Catastro API](https://agile-reaches-32584.herokuapp.com/api)
+
+Some other features are included to extend the service:
+- [JSON Web Tokens](https://jwt.io/) - The JSON Web Tokens (aka JWT) for secure ht e non public API as User management and CRUD User's Location operations.  
+- [Mongo DB](https://docs.mongodb.com/) - MongoDB is an open-source database that provides high performance, high availability, and automatic scaling. MongoDB data structure is composed of field and value pairs similar to JSON.
+
 To get the Node server running locally:
 
-- Clone this repo
+- Clone this repo https://github.com/aurelido/catastro-node-express.git
 - `npm install` to install all required dependencies
 - Install MongoDB Community Edition ([instructions](https://docs.mongodb.com/manual/installation/#tutorials)) 
 - Create default /data/db directory `mkdir -p ./data/db`
