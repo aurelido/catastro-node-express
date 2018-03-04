@@ -1,6 +1,9 @@
 ### MongoDB default data directory ###
 data/
 
+###
+public/images
+
 ### STS
 .apt_generated
 .classpath
