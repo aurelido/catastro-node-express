@@ -4,6 +4,8 @@ var mongoose = require('mongoose');
 var User = mongoose.model('User');
 var Property = mongoose.model('Property');
 var auth = require('../auth');
+var fs = require('fs');
+var request = require('request');
 
 /**
  * Parameter PROPERTY
@@ -57,7 +59,7 @@ router.delete('/:property/archive', auth.required, function(req, res, next){
  */
 router.get('/:property', auth.optional, function(req, res, next){
     var format = 'json';
-
+    console.log('Getting ' + req.property.rc);
     if(typeof req.query.format === 'geojson'){
         limit = req.query.format;
     }
@@ -159,5 +161,28 @@ router.get('/', auth.required, function(req, res, next) {
 //         });
 //       }).catch(next);
 // });
+
+
+router.get('/:property/image', auth.optional, function(req, res, next){
+    let file = 'images/' + req.property.rc + '.png';
+    let url = 'https://www1.sedecatastro.gob.es/Cartografia/GeneraGraficoParcela.aspx?del=13&mun=900&RefCat=' + req.property.rc + '&AnchoPixels=300&AltoPixels=300'
+    console.log('Retrieving ' + file + ' with the url ' + url);
+
+    download(url, 'public/' + file, function(){
+        console.log(file + ' done!');
+        return res.json({image: file});
+    });
+});
+
+var download = function(uri, filename, callback){
+  request.head(uri, function(err, res, body){
+    console.log('content-type:', res.headers['content-type']);
+    console.log('content-length:', res.headers['content-length']);
+
+    request(uri).pipe(fs.createWriteStream(filename)).on('close', callback);
+  });
+};
+
+
 
 module.exports = router;
