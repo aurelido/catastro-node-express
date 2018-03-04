@@ -10,6 +10,7 @@ var fs = require('fs'),
     errorhandler = require('errorhandler'),
     mongoose = require('mongoose');
 
+
 var isProduction = process.env.NODE_ENV === 'production';
 
 // Create global app object
@@ -43,6 +44,12 @@ require('./models/Property');
 require('./config/passport');
 
 app.use(require('./routes'));
+
+/// Create temp folder for images
+var dir = 'public/images';
+if (!fs.existsSync(dir)){
+    fs.mkdirSync(dir);
+}
 
 /// catch 404 and forward to error handler
 app.use(function(req, res, next) {

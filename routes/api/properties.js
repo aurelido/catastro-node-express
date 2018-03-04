@@ -163,15 +163,21 @@ router.get('/', auth.required, function(req, res, next) {
 // });
 
 
-router.get('/:property/image', auth.optional, function(req, res, next){
+router.get('/:property/image', auth.optional, function(req, res, next) {
     let file = 'images/' + req.property.rc + '.png';
     let url = 'https://www1.sedecatastro.gob.es/Cartografia/GeneraGraficoParcela.aspx?del=13&mun=900&RefCat=' + req.property.rc + '&AnchoPixels=300&AltoPixels=300'
     console.log('Retrieving ' + file + ' with the url ' + url);
 
-    download(url, 'public/' + file, function(){
-        console.log(file + ' done!');
-        return res.json({image: file});
-    });
+    if ( !fs.existsSync( 'public/' + file ) ) {
+        console.log('File does not exists');
+        download(url, 'public/' + file, function() {
+          console.log(file + ' done!');
+        });
+    } else {
+        console.log('File already exists');
+    }
+
+    return res.json( {image: file} );
 });
 
 var download = function(uri, filename, callback){
